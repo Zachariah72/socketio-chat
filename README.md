@@ -1,6 +1,6 @@
-# Real-Time Chat Application with Socket.io
+# Smiley - Fun Real-Time Chat App
 
-A fully functional real-time chat application built with Socket.io, featuring bidirectional communication, private messaging, file sharing, and more.
+A fun and secure real-time chat application built with Socket.io, featuring end-to-end encryption, smiley themes, and local phonebook integration.
 
 ## 🚀 Features
 
