@@ -609,6 +609,49 @@ export default function ChatPage(){
               <div style={{color: 'rgba(255, 255, 255, 0.7)', fontSize: '12px'}}>{user?.status || ''}</div>
             </div>
           </div>
+          {/* Status Updates Preview */}
+          {activeStatuses.length > 0 && (
+            <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+              <div style={{color: 'rgba(255, 255, 255, 0.6)', fontSize: '12px'}}>My Status</div>
+              <div
+                onClick={() => setShowStatusModal(true)}
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: activeStatuses[0]?.media ? `url(${SERVER}${activeStatuses[0].media})` : 'linear-gradient(135deg, #FF6B6B 0%, #EE5A52 100%)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '16px',
+                  cursor: 'pointer',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+                  border: '2px solid rgba(255, 255, 255, 0.3)'
+                }}
+              >
+                {!activeStatuses[0]?.media && (activeStatuses[0]?.text?.charAt(0).toUpperCase() || '📱')}
+              </div>
+              {activeStatuses.length > 1 && (
+                <div style={{
+                  width: '24px',
+                  height: '24px',
+                  borderRadius: '50%',
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontSize: '10px',
+                  fontWeight: 'bold'
+                }}>
+                  +{activeStatuses.length - 1}
+                </div>
+              )}
+            </div>
+          )}
           <div style={{display: 'flex', gap: '8px'}}>
             <button onClick={() => setShowSettings(!showSettings)} style={{
               background: 'rgba(255, 255, 255, 0.1)',
