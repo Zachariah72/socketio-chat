@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: 'Hey there! I am using Smiley 😊',
+    default: '',
     trim: true
   },
   publicKey: {

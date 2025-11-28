@@ -49,6 +49,7 @@ export default function ChatPage(){
   const [activeStatuses, setActiveStatuses] = useState([]);
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [currentStatusIndex, setCurrentStatusIndex] = useState(0);
+  const [customStatus, setCustomStatus] = useState(user?.status || '');
   const [showCreateGroup, setShowCreateGroup] = useState(false);
   const [groupName, setGroupName] = useState('');
   const [groupDescription, setGroupDescription] = useState('');
@@ -605,7 +606,7 @@ export default function ChatPage(){
             </div>
             <div>
               <strong style={{color: 'white', fontSize: '16px'}}>{user?.name}</strong>
-              <div style={{color: 'rgba(255, 255, 255, 0.7)', fontSize: '12px'}}>{user?.status || 'Hey there! I am using Smiley 😊'}</div>
+              <div style={{color: 'rgba(255, 255, 255, 0.7)', fontSize: '12px'}}>{user?.status || ''}</div>
             </div>
           </div>
           <div style={{display: 'flex', gap: '8px'}}>
@@ -949,6 +950,61 @@ export default function ChatPage(){
                       🗑️ Remove
                     </button>
                   )}
+                </div>
+              </div>
+
+              {/* Custom Status/About Section */}
+              <div style={{marginTop: '24px'}}>
+                <h5 style={{margin: '0 0 12px 0', color: 'white', fontSize: '14px'}}>About</h5>
+                <textarea
+                  value={customStatus}
+                  onChange={(e) => setCustomStatus(e.target.value)}
+                  placeholder="Tell people about yourself..."
+                  maxLength={100}
+                  rows={3}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    border: '2px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '8px',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    color: 'white',
+                    fontSize: '14px',
+                    outline: 'none',
+                    resize: 'vertical',
+                    fontFamily: 'inherit'
+                  }}
+                />
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px'}}>
+                  <span style={{fontSize: '12px', color: 'rgba(255, 255, 255, 0.6)'}}>
+                    {customStatus.length}/100 characters
+                  </span>
+                  <button
+                    onClick={async () => {
+                      try {
+                        await axios.put(SERVER + '/user/profile', { status: customStatus }, { headers: { Authorization: token } });
+                        // Update local user state
+                        const updatedUser = { ...user, status: customStatus };
+                        localStorage.setItem('user', JSON.stringify(updatedUser));
+                        // Force re-render by updating state
+                        window.location.reload();
+                      } catch (error) {
+                        console.error('Failed to update status:', error);
+                        alert('Failed to update status');
+                      }
+                    }}
+                    style={{
+                      background: 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)',
+                      color: 'white',
+                      border: 'none',
+                      padding: '6px 12px',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontSize: '12px'
+                    }}
+                  >
+                    Save
+                  </button>
                 </div>
               </div>
 
